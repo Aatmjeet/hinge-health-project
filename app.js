@@ -1,9 +1,8 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
 const cors = require("cors")
 const bodyParser = require("body-parser")
-const retrieveNestedTree = require("./methods/get_tree");
-const insertNode = require("./methods/insert_node");
+const retrieveNestedTree = require("./controller/get_tree");
+const insertNode = require("./controller/insert_node");
 
 
 const app = express();
@@ -18,9 +17,8 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.get('/api/tree', async (req, res) => {
 	try {
 		const nestedTree = await retrieveNestedTree();
-		res.json(nestedTree);
+		res.status(200).json(nestedTree);
 	} catch (error) {
-		console.error('Error retrieving nested tree:', error);
 		res.status(500).json({ error: 'Error retrieving nested tree' });
 	}
 });
@@ -29,7 +27,13 @@ app.get('/api/tree', async (req, res) => {
 app.post('/api/tree', async (req, res) => {
 	const { label, parentId } = req.body;
 
-	await insertNode(label, parentId, res)
+	// label is required field
+	if (!!!label){
+		res.status(400).json({error: "Missing required fields"})
+	}
+	else{
+		await insertNode(label, parentId, res)
+	}
 });
 
 

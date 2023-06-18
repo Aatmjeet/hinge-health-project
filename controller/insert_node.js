@@ -1,6 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
+const get_prisma_client = require('../prisma/get_prisma_client')
 
-const prisma = new PrismaClient();
+const prisma = get_prisma_client()
 
 async function insertNode(label, parentId = null, res) {
 	try {

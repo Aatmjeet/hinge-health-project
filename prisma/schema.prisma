@@ -2,21 +2,21 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-	provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-	provider = "postgresql"
-	url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // Our model go here
 model Node {
-	id       Int    @id @default(autoincrement())
-	label    String
-	parent   Node?  @relation("NodeToParent", fields: [parentId], references: [id])
-	parentId Int?
-	children Node[] @relation("NodeToParent")
+  id       Int    @id @default(autoincrement())
+  label    String
+  parent   Node?  @relation("NodeToParent", fields: [parentId], references: [id])
+  parentId Int?
+  children Node[] @relation("NodeToParent")
 
-	@@map(name: "tbl__tree_node")
+  @@map(name: "tbl__tree_node")
 }
