@@ -64,7 +64,7 @@ npx prisma generate
 - Now that we have prisma setup, we migrate our models to database using following command
 
 ```shell
-npm prisma migrate deploy
+npx prisma migrate deploy
 ```
 
 - Everything is setup now, time to run the server
